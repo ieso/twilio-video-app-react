@@ -18,6 +18,10 @@ export interface StateContextType {
   setActiveSinkId(sinkId: string): void;
   settings: Settings;
   dispatchSetting: React.Dispatch<SettingsAction>;
+  userName: string;
+  setUserName: React.Dispatch<React.SetStateAction<string>>;
+  roomName: string;
+  setRoomName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const StateContext = createContext<StateContextType>(null!);
@@ -32,6 +36,9 @@ export const StateContext = createContext<StateContextType>(null!);
   is ok to call hooks inside if() statements.
 */
 export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
+  const [userName, setUserName] = useState<string>(null!);
+  const [roomName, setRoomName] = useState<string>(null!);
+
   const [error, setError] = useState<TwilioError | null>(null);
   const [isFetching, setIsFetching] = useState(false);
   const [activeSinkId, setActiveSinkId] = useState('default');
@@ -45,7 +52,17 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
     setActiveSinkId,
     settings,
     dispatchSetting,
+    userName,
+    setUserName,
+    roomName,
+    setRoomName,
   } as StateContextType;
+
+  if (userName) {
+    const userany: any = userName;
+    const user = { displayName: userany, photoURL: undefined, passcode: undefined };
+    contextValue.user = user;
+  }
 
   if (process.env.REACT_APP_SET_AUTH === 'firebase') {
     contextValue = {

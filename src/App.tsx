@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from '@material-ui/core/styles';
 
 import Controls from './components/Controls/Controls';
@@ -9,7 +9,7 @@ import Room from './components/Room/Room';
 
 import useHeight from './hooks/useHeight/useHeight';
 import useRoomState from './hooks/useRoomState/useRoomState';
-
+import useSearchToken from './hooks/useSearchToken';
 const Container = styled('div')({
   display: 'grid',
   gridTemplateRows: 'auto 1fr',
@@ -28,6 +28,8 @@ export default function App() {
   // We will dynamically set the height with 'window.innerHeight', which means that this
   // will look good on mobile browsers even after the location bar opens or closes.
   const height = useHeight();
+
+  useSearchToken();
 
   return (
     <Container style={{ height }}>
