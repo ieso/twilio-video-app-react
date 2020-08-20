@@ -47,8 +47,5 @@ export default function useSearchToken() {
       }
       connect(token);
     }
-
-    //parse the jwt token
-    //pull out room name
   }, [queryString]);
 }
