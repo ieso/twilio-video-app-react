@@ -1,11 +1,8 @@
 import React, { ChangeEvent, useState, FormEvent, useEffect } from 'react';
 import { useAppState } from '../state';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
-import { useLocation, useHistory, Redirect } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import useVideoContext from './useVideoContext/useVideoContext';
-import { TokenClass } from 'typescript';
 
 export default function useSearchToken() {
   const { setUserName, setRoomName } = useAppState();
