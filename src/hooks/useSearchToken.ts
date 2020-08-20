@@ -28,10 +28,11 @@ export default function useSearchToken() {
 
     const token = params['token'];
 
+    var roomName;
     if (token) {
       const decodedToken: any = jwt.decode(token);
       console.log('decodedToken', decodedToken);
-      const roomName = decodedToken?.grants?.video?.room;
+      roomName = decodedToken?.grants?.video?.room;
       if (roomName) setRoomName(roomName);
     }
 
@@ -51,21 +52,3 @@ export default function useSearchToken() {
     //pull out room name
   }, [queryString]);
 }
-
-/*
-
-http://localhost:3000/?identity=alan&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzU0MzUzMDQ2MDAzM2Q1YzhmYjU3YmVhNGVmNjgzYzA5LTE1OTc5MjczNTEiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJUIDFmd2Z3ZiIsInZpZGVvIjp7InJvb20iOiJBcHBvaW50bWVudDo0M2U0MmI5Yy1jMjE2LTQ4NmMtYWNmZi01NjU2YmIzYjYwMDgifX0sImlhdCI6MTU5NzkyNzM1MSwiZXhwIjoxNTk3OTQxNzUxLCJpc3MiOiJTSzU0MzUzMDQ2MDAzM2Q1YzhmYjU3YmVhNGVmNjgzYzA5Iiwic3ViIjoiQUMzNGY0Mjc1ODhmNjgxZmFhOWI0ZGVhMzU5NTZkNTU1OCJ9.nsX3ahA9qcnCZ37nhq5fMvvfVgH_ShnYKWx-hkVzcew
-
-
-
-
-*/
-
-const aaa = {
-  id: 0,
-  isStateEditable: true,
-  name: 'State',
-  value:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTSzU0MzUzMDQ2MDAzM2Q1YzhmYjU3YmVhNGVmNjgzYzA5LTE1OTc5MjczNTEiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJUIDFmd2Z3ZiIsInZpZGVvIjp7InJvb20iOiJBcHBvaW50bWVudDo0M2U0MmI5Yy1jMjE2LTQ4NmMtYWNmZi01NjU2YmIzYjYwMDgifX0sImlhdCI6MTU5NzkyNzM1MSwiZXhwIjoxNTk3OTQxNzUxLCJpc3MiOiJTSzU0MzUzMDQ2MDAzM2Q1YzhmYjU3YmVhNGVmNjgzYzA5Iiwic3ViIjoiQUMzNGY0Mjc1ODhmNjgxZmFhOWI0ZGVhMzU5NTZkNTU1OCJ9.nsX3ahA9qcnCZ37nhq5fMvvfVgH_ShnYKWx-hkVzcew',
-  subHooks: [],
-};
