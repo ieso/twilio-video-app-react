@@ -3,16 +3,21 @@ import { useAppState } from '../state';
 import { useLocation } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import useVideoContext from './useVideoContext/useVideoContext';
+import { ContactlessOutlined } from '@material-ui/icons';
 
 export default function useSearchToken() {
-  const { setUserName, setRoomName } = useAppState();
-  const { connect } = useVideoContext();
+  const { setUserName, setRoomName, setProvidedToken, isFetching } = useAppState();
+  const { isConnecting, connect, isAcquiringLocalTracks, localTracks } = useVideoContext();
+
+  const [connecting, setConnecting] = useState(false);
 
   const location = useLocation<{ from: Location }>();
 
   var queryString = location.search?.substring(1);
+  const isReadyToConnect = (!isAcquiringLocalTracks && localTracks.length && !isConnecting) || isFetching || connecting;
 
   useEffect(() => {
+    if (!isReadyToConnect) return;
     if (!queryString) return;
 
     var params: any = {};
@@ -31,6 +36,7 @@ export default function useSearchToken() {
       console.log('decodedToken', decodedToken);
       roomName = decodedToken?.grants?.video?.room;
       if (roomName) setRoomName(roomName);
+      setProvidedToken(token);
     }
 
     const identity = params['identity'];
@@ -38,11 +44,12 @@ export default function useSearchToken() {
       setUserName(identity);
     }
 
-    if (token) {
+    if (token && !isAcquiringLocalTracks) {
       if (!window.location.origin.includes('twil.io')) {
         window.history.replaceState(null, '', window.encodeURI(`/room/${roomName}${window.location.search || ''}`));
       }
+      setConnecting(true);
       connect(token);
     }
-  }, [queryString]);
+  }, [queryString, isReadyToConnect]);
 }

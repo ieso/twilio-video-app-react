@@ -18,6 +18,8 @@ export interface StateContextType {
   setActiveSinkId(sinkId: string): void;
   settings: Settings;
   dispatchSetting: React.Dispatch<SettingsAction>;
+  providedToken: string;
+  setProvidedToken: React.Dispatch<React.SetStateAction<string>>;
   userName: string;
   setUserName: React.Dispatch<React.SetStateAction<string>>;
   roomName: string;
@@ -36,6 +38,7 @@ export const StateContext = createContext<StateContextType>(null!);
   is ok to call hooks inside if() statements.
 */
 export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
+  const [providedToken, setProvidedToken] = useState<string>(null!);
   const [userName, setUserName] = useState<string>(null!);
   const [roomName, setRoomName] = useState<string>(null!);
 
@@ -52,6 +55,8 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
     setActiveSinkId,
     settings,
     dispatchSetting,
+    providedToken,
+    setProvidedToken,
     userName,
     setUserName,
     roomName,
@@ -60,6 +65,7 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
 
   if (userName) {
     const userany: any = userName;
+
     const user = { displayName: userany, photoURL: undefined, passcode: undefined };
     contextValue.user = user;
   }
@@ -78,6 +84,8 @@ export default function AppStateProvider(props: React.PropsWithChildren<{}>) {
     contextValue = {
       ...contextValue,
       getToken: async (identity, roomName) => {
+        if (providedToken) return providedToken;
+
         const headers = new window.Headers();
         const endpoint = process.env.REACT_APP_TOKEN_ENDPOINT || '/token';
         const params = new window.URLSearchParams({ identity, roomName });
