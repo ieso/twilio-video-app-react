@@ -108,7 +108,7 @@ export default function ParticipantInfo({ participant, onClick, isSelected, chil
         <div className={classes.infoRow}>
           <h4 className={classes.identity}>
             <ParticipantConnectionIndicator participant={participant} />
-            {participant.identity}
+            {' ' || participant.identity}
           </h4>
           <NetworkQualityLevel qualityLevel={networkQualityLevel} />
         </div>

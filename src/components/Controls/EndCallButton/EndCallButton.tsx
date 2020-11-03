@@ -19,8 +19,20 @@ export default function EndCallButton() {
   const classes = useStyles();
   const { room } = useVideoContext();
 
+  const appointmentGuid = room?.name.replaceAll(/^Appointment:/g, '');
+
   return (
-    <Tooltip title={'End Call'} onClick={() => room.disconnect()} placement="top" PopperProps={{ disablePortal: true }}>
+    <Tooltip
+      title={'End Call'}
+      onClick={() => {
+        room.disconnect();
+        window.open('', '_parent', '')?.close();
+        // window. close();
+        window.location.href = 'https://login.iesohealth.uk/';
+      }}
+      placement="top"
+      PopperProps={{ disablePortal: true }}
+    >
       <Fab className={classes.fab} color="primary">
         <CallEnd />
       </Fab>
