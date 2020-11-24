@@ -19,7 +19,7 @@ export default function EndCallButton() {
   const classes = useStyles();
   const { room } = useVideoContext();
 
-  const appointmentGuid = room?.name.replaceAll(/^Appointment:/g, '');
+  // const appointmentGuid = room?.name?.replaceAll && room?.name?.replaceAll(/^Appointment:/g, '');
 
   return (
     <Tooltip
